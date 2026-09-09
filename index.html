@@ -40,8 +40,9 @@
     h1 span { color: var(--lime); }
     .hero-lead { max-width: 650px; margin-bottom: 32px; color: #d4dfd9; font-size: clamp(1.08rem, 2vw, 1.32rem); line-height: 1.55; }
     .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
-    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 56px; padding: 0 24px; border: 0; border-radius: 999px; text-decoration: none; font-weight: 900; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 56px; padding: 0 24px; border: 0; border-radius: 999px; text-decoration: none; font-weight: 900; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; position: relative; overflow: hidden; isolation: isolate; }
     .btn:hover { transform: translateY(-2px); }
+    .btn::after { content: ""; position: absolute; inset: -40% auto -40% -45%; width: 32%; z-index: -1; background: rgba(255,255,255,.42); transform: skewX(-22deg); animation: ctaShine 5.5s ease-in-out infinite; }
     .btn-dark { color: var(--ink); background: var(--lime); box-shadow: 0 12px 30px rgba(0,0,0,.24); }
     .btn-violet { color: white; background: var(--violet); box-shadow: 0 12px 28px rgba(109,74,255,.28); }
     .micro { font-size: .85rem; font-weight: 750; color: #c6d2cc; }
@@ -163,8 +164,9 @@
     .footnote { display: block; margin-top: 16px; font-size: .82rem; color: #ded7ff; }
     .sticky { display: none; }
     .choice-modal { position: fixed; inset: 0; z-index: 30; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(10,18,14,.7); backdrop-filter: blur(8px); }
-    .choice-modal.open { display: flex; }
+    .choice-modal.open { display: flex; animation: modalFade .2s ease both; }
     .choice-panel { width: min(540px, 100%); padding: 34px; border: 1px solid rgba(255,255,255,.3); border-radius: 30px; background: var(--white); box-shadow: var(--shadow); position: relative; }
+    .choice-modal.open .choice-panel { animation: modalRise .34s cubic-bezier(.2,.8,.2,1) both; }
     .choice-panel h2 { margin-bottom: 8px; font-size: clamp(2rem, 5vw, 3rem); }
     .choice-sub { margin-bottom: 24px; color: var(--muted); }
     .choice-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 50%; color: var(--ink); background: var(--paper); cursor: pointer; font-size: 1.35rem; }
@@ -181,9 +183,24 @@
     .choice-arrow { font-size: 1.35rem; font-weight: 900; }
     .zalo-float { position: fixed; right: 22px; bottom: 22px; z-index: 12; display: flex; align-items: center; gap: 11px; padding: 10px 16px 10px 10px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; color: white; background: #0866ff; box-shadow: 0 14px 36px rgba(8,102,255,.3); text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
     .zalo-float:hover { transform: translateY(-3px); box-shadow: 0 18px 42px rgba(8,102,255,.38); }
-    .zalo-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: #0866ff; background: white; font-size: .74rem; font-weight: 950; }
+    .zalo-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: #0866ff; background: white; font-size: .74rem; font-weight: 950; position: relative; }
+    .zalo-mark::after { content: ""; position: absolute; width: 42px; height: 42px; border: 2px solid rgba(8,102,255,.35); border-radius: 50%; animation: softPulse 3.2s ease-out infinite; }
     .zalo-copy { display: grid; line-height: 1.15; font-size: .78rem; }
     .zalo-copy strong { margin-top: 3px; font-size: .94rem; }
+    .motion-ready .hero .eyebrow, .motion-ready .hero h1, .motion-ready .hero-lead, .motion-ready .hero .actions, .motion-ready .hero-card { opacity: 0; animation: heroIn .7s cubic-bezier(.2,.75,.25,1) forwards; }
+    .motion-ready .hero h1 { animation-delay: .08s; }
+    .motion-ready .hero-lead { animation-delay: .16s; }
+    .motion-ready .hero .actions { animation-delay: .24s; }
+    .motion-ready .hero-card { animation-delay: .18s; }
+    .motion-ready .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.75,.25,1); }
+    .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .motion-ready .reveal-item { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; transition-delay: calc(var(--reveal-order, 0) * 70ms); }
+    .motion-ready .is-visible .reveal-item { opacity: 1; transform: translateY(0); }
+    @keyframes heroIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ctaShine { 0%, 68% { left: -45%; } 82%, 100% { left: 125%; } }
+    @keyframes softPulse { 0% { opacity: .55; transform: scale(.9); } 70%, 100% { opacity: 0; transform: scale(1.55); } }
+    @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalRise { from { opacity: 0; transform: translateY(22px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     footer { padding: 28px 0; text-align: center; color: var(--muted); font-size: .82rem; background: var(--paper); }
     @media (max-width: 820px) {
       .wrap { width: min(100% - 28px, 650px); }
@@ -223,7 +240,12 @@
       .zalo-copy { display: none; }
       footer { padding-bottom: 100px; }
     }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn, .choice-link, .zalo-float { transition: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn, .choice-link, .zalo-float, .reveal, .reveal-item { transition: none !important; animation: none !important; }
+      .btn::after, .zalo-mark::after { display: none; }
+      .motion-ready .hero .eyebrow, .motion-ready .hero h1, .motion-ready .hero-lead, .motion-ready .hero .actions, .motion-ready .hero-card, .motion-ready .reveal, .motion-ready .reveal-item { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -451,6 +473,7 @@
   <footer>14 Ngày Phụ Nữ Làm Chủ AI · Chương trình chỉ dành cho phụ nữ</footer>
 
   <script>
+    document.documentElement.classList.add('motion-ready');
     const sticky = document.querySelector('.sticky');
     const heroButton = document.querySelector('.hero .js-register');
     const finalSection = document.querySelector('.final');
@@ -474,6 +497,23 @@
     choiceClose.addEventListener('click', closeChoices);
     choiceModal.addEventListener('click', event => { if (event.target === choiceModal) closeChoices(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && choiceModal.classList.contains('open')) closeChoices(); });
+    const revealSections = document.querySelectorAll('main > section:not(.hero)');
+    revealSections.forEach(section => {
+      section.classList.add('reveal');
+      section.querySelectorAll('.pain, .feature, .outcome-card, .tree-shot, .phase, .compare-card, .day, .fit, .mentor-stat, details').forEach((item, index) => {
+        item.classList.add('reveal-item');
+        item.style.setProperty('--reveal-order', Math.min(index, 5));
+      });
+    });
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    revealSections.forEach(section => revealObserver.observe(section));
     const updateSticky = () => {
       const heroPassed = heroButton.getBoundingClientRect().bottom < 0;
       const finalVisible = finalSection.getBoundingClientRect().top < window.innerHeight;
