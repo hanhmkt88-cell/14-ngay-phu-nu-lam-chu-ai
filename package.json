@@ -1,0 +1,9 @@
+{
+  "name": "14-ngay-phu-nu-lam-chu-ai",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node dev.mjs"
+  }
+}
