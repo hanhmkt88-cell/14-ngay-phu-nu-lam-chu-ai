@@ -154,12 +154,6 @@
     .final .btn { background: var(--lime); color: var(--ink); }
     .footnote { display: block; margin-top: 16px; font-size: .82rem; color: #ded7ff; }
     .sticky { display: none; }
-    .modal { position: fixed; inset: 0; z-index: 20; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(10,18,14,.68); backdrop-filter: blur(8px); }
-    .modal.open { display: flex; }
-    .modal-box { width: min(520px, 100%); background: white; color: var(--ink); border-radius: 30px; padding: 34px; box-shadow: var(--shadow); position: relative; }
-    .modal-box h2 { font-size: 2.2rem; }
-    .close { position: absolute; right: 18px; top: 18px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--paper); cursor: pointer; font-size: 1.4rem; }
-    .modal-note { padding: 15px; border-radius: 14px; background: #fff7d8; color: #63551e; font-size: .92rem; }
     footer { padding: 28px 0; text-align: center; color: var(--muted); font-size: .82rem; background: var(--paper); }
     @media (max-width: 820px) {
       .wrap { width: min(100% - 28px, 650px); }
@@ -205,7 +199,7 @@
           <h1>14 ngày để <span>AI làm việc cùng bạn.</span></h1>
           <p class="hero-lead">Không gian học dành riêng cho chị em phụ nữ mới bắt đầu — để cùng thực hành AI mà không phải tự mò một mình.</p>
           <div class="actions">
-            <button class="btn btn-dark js-open">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></button>
+            <a class="btn btn-dark js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></a>
             <span class="micro">Khai giảng 09/09/2026 · Đủ 50 vé sẽ đóng đăng ký</span>
           </div>
         </div>
@@ -361,40 +355,20 @@
         <div class="kicker" style="color:var(--lime)">50 vé miễn phí · Chỉ dành cho phụ nữ</div>
         <h2>Bắt đầu dùng AI trong 14 ngày.</h2>
         <p>Bạn chọn bước đầu tiên. Chương trình cho bạn lộ trình để đi tiếp.</p>
-        <button class="btn js-open">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></button>
+        <a class="btn js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></a>
         <span class="footnote">Khai giảng 09/09/2026 · Có record xem lại · Đủ 50 vé sẽ đóng đăng ký</span>
       </div>
     </section>
   </main>
 
-  <div class="sticky"><button class="btn btn-dark js-open">Giữ vé miễn phí &amp; nhận lịch học →</button></div>
-
-  <div class="modal" id="register-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-box">
-      <button class="close" aria-label="Đóng">×</button>
-      <div class="kicker">Đăng ký tham gia</div>
-      <h2 id="modal-title">Cổng đăng ký đang được kết nối.</h2>
-      <p>Link giữ vé chính thức sẽ được cập nhật tại đây trước khi chương trình mở đăng ký.</p>
-      <div class="modal-note">Trang chưa thu thập thông tin cá nhân khi chưa có biểu mẫu đăng ký được xác minh.</div>
-    </div>
-  </div>
+  <div class="sticky"><a class="btn btn-dark js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; nhận lịch học →</a></div>
 
   <footer>14 Ngày Phụ Nữ Làm Chủ AI · Chương trình chỉ dành cho phụ nữ</footer>
 
   <script>
-    const modal = document.querySelector('#register-modal');
     const sticky = document.querySelector('.sticky');
-    const heroButton = document.querySelector('.hero .js-open');
+    const heroButton = document.querySelector('.hero .js-zalo');
     const finalSection = document.querySelector('.final');
-    const openers = document.querySelectorAll('.js-open');
-    const closer = document.querySelector('.close');
-    let previousFocus;
-    const openModal = () => { previousFocus = document.activeElement; modal.classList.add('open'); closer.focus(); document.body.style.overflow = 'hidden'; };
-    const closeModal = () => { modal.classList.remove('open'); document.body.style.overflow = ''; previousFocus?.focus(); };
-    openers.forEach(button => button.addEventListener('click', openModal));
-    closer.addEventListener('click', closeModal);
-    modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     const updateSticky = () => {
       const heroPassed = heroButton.getBoundingClientRect().bottom < 0;
       const finalVisible = finalSection.getBoundingClientRect().top < window.innerHeight;
