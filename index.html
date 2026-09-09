@@ -162,6 +162,28 @@
     .final .btn { background: var(--lime); color: var(--ink); }
     .footnote { display: block; margin-top: 16px; font-size: .82rem; color: #ded7ff; }
     .sticky { display: none; }
+    .choice-modal { position: fixed; inset: 0; z-index: 30; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(10,18,14,.7); backdrop-filter: blur(8px); }
+    .choice-modal.open { display: flex; }
+    .choice-panel { width: min(540px, 100%); padding: 34px; border: 1px solid rgba(255,255,255,.3); border-radius: 30px; background: var(--white); box-shadow: var(--shadow); position: relative; }
+    .choice-panel h2 { margin-bottom: 8px; font-size: clamp(2rem, 5vw, 3rem); }
+    .choice-sub { margin-bottom: 24px; color: var(--muted); }
+    .choice-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 50%; color: var(--ink); background: var(--paper); cursor: pointer; font-size: 1.35rem; }
+    .choice-list { display: grid; gap: 12px; }
+    .choice-link { display: grid; grid-template-columns: 46px 1fr auto; gap: 14px; align-items: center; padding: 18px; border: 1px solid var(--line); border-radius: 20px; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .choice-link:hover { transform: translateY(-2px); border-color: var(--violet); box-shadow: 0 12px 28px rgba(36,31,68,.1); }
+    .choice-link.primary { color: white; border-color: var(--violet); background: var(--violet); }
+    .choice-link.primary:hover { border-color: var(--violet-dark); background: var(--violet-dark); }
+    .choice-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; color: var(--violet); background: #ece9ff; font-weight: 950; }
+    .choice-link.primary .choice-icon { color: var(--ink); background: var(--lime); }
+    .choice-copy strong { display: block; margin-bottom: 3px; line-height: 1.25; }
+    .choice-copy small { display: block; color: var(--muted); font-size: .88rem; line-height: 1.4; }
+    .choice-link.primary .choice-copy small { color: #e7e2ff; }
+    .choice-arrow { font-size: 1.35rem; font-weight: 900; }
+    .zalo-float { position: fixed; right: 22px; bottom: 22px; z-index: 12; display: flex; align-items: center; gap: 11px; padding: 10px 16px 10px 10px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; color: white; background: #0866ff; box-shadow: 0 14px 36px rgba(8,102,255,.3); text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+    .zalo-float:hover { transform: translateY(-3px); box-shadow: 0 18px 42px rgba(8,102,255,.38); }
+    .zalo-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: #0866ff; background: white; font-size: .74rem; font-weight: 950; }
+    .zalo-copy { display: grid; line-height: 1.15; font-size: .78rem; }
+    .zalo-copy strong { margin-top: 3px; font-size: .94rem; }
     footer { padding: 28px 0; text-align: center; color: var(--muted); font-size: .82rem; background: var(--paper); }
     @media (max-width: 820px) {
       .wrap { width: min(100% - 28px, 650px); }
@@ -190,9 +212,18 @@
       .sticky.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
       .sticky .btn { width: 100%; box-shadow: 0 12px 40px rgba(23,33,28,.35); }
       .sticky .btn { min-height: 52px; padding-inline: 16px; font-size: .9rem; }
+      .choice-modal { align-items: flex-end; padding: 12px; }
+      .choice-panel { padding: 28px 18px 20px; border-radius: 28px 28px 20px 20px; max-height: calc(100dvh - 24px); overflow-y: auto; }
+      .choice-panel h2 { padding-right: 42px; font-size: 2rem; }
+      .choice-link { grid-template-columns: 42px 1fr auto; padding: 15px; }
+      .choice-icon { width: 42px; height: 42px; }
+      .choice-copy small { font-size: .86rem; }
+      .zalo-float { right: 16px; bottom: 78px; width: 52px; height: 52px; padding: 5px; justify-content: center; }
+      .zalo-mark { width: 42px; height: 42px; }
+      .zalo-copy { display: none; }
       footer { padding-bottom: 100px; }
     }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn, .choice-link, .zalo-float { transition: none; } }
   </style>
 </head>
 <body>
@@ -211,7 +242,7 @@
           <h1>14 ngày để <span>AI làm việc cùng bạn.</span></h1>
           <p class="hero-lead">Không gian học dành riêng cho chị em phụ nữ mới bắt đầu — để cùng thực hành AI mà không phải tự mò một mình.</p>
           <div class="actions">
-            <a class="btn btn-dark js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></a>
+            <button class="btn btn-dark js-register" type="button">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></button>
             <span class="micro">Khai giảng 09/09/2026 · Đủ 50 vé sẽ đóng đăng ký</span>
           </div>
         </div>
@@ -283,7 +314,7 @@
           <article class="outcome-card"><div class="outcome-num">04</div><h3>Tạo landing page nhân hiệu</h3><p>Tự xây trang giới thiệu chuyên môn, sản phẩm, dịch vụ và giá trị của chính mình.</p></article>
           <article class="outcome-card"><div class="outcome-num">05</div><h3>Bắt đầu tạo mini app với AI</h3><p>Biến một nhu cầu công việc thành mini app đơn giản, theo cách người không chuyên lập trình vẫn theo được.</p></article>
         </div>
-        <div class="outcome-cta"><a class="btn btn-violet js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; bắt đầu làm cùng AI <span aria-hidden="true">→</span></a></div>
+        <div class="outcome-cta"><button class="btn btn-violet js-register" type="button">Giữ vé miễn phí &amp; bắt đầu làm cùng AI <span aria-hidden="true">→</span></button></div>
       </div>
     </section>
 
@@ -384,20 +415,65 @@
         <div class="kicker" style="color:var(--lime)">50 vé miễn phí · Chỉ dành cho phụ nữ</div>
         <h2>Bắt đầu dùng AI trong 14 ngày.</h2>
         <p>Bạn chọn bước đầu tiên. Chương trình cho bạn lộ trình để đi tiếp.</p>
-        <a class="btn js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></a>
+        <button class="btn js-register" type="button">Giữ vé miễn phí &amp; nhận lịch học <span aria-hidden="true">→</span></button>
         <span class="footnote">Khai giảng 09/09/2026 · Có record xem lại · Đủ 50 vé sẽ đóng đăng ký</span>
       </div>
     </section>
   </main>
 
-  <div class="sticky"><a class="btn btn-dark js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; nhận lịch học →</a></div>
+  <div class="sticky"><button class="btn btn-dark js-register" type="button">Giữ vé miễn phí &amp; nhận lịch học →</button></div>
+
+  <a class="zalo-float" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer" aria-label="Chat với Hannah qua Zalo">
+    <span class="zalo-mark" aria-hidden="true">Zalo</span>
+    <span class="zalo-copy">Cần hỗ trợ?<strong>Chat với Hannah</strong></span>
+  </a>
+
+  <div class="choice-modal" id="choice-modal" role="dialog" aria-modal="true" aria-labelledby="choice-title" aria-describedby="choice-description">
+    <div class="choice-panel">
+      <button class="choice-close" type="button" aria-label="Đóng lựa chọn đăng ký">×</button>
+      <h2 id="choice-title">Bạn muốn bắt đầu theo cách nào?</h2>
+      <p class="choice-sub" id="choice-description">Chọn cách thuận tiện nhất với bạn.</p>
+      <div class="choice-list">
+        <a class="choice-link primary" href="https://phunulamchuai.com" target="_blank" rel="noopener noreferrer">
+          <span class="choice-icon" aria-hidden="true">14</span>
+          <span class="choice-copy"><strong>Vào hệ thống Phụ Nữ Làm Chủ AI</strong><small>Tạo tài khoản và bắt đầu hành trình 14 ngày.</small></span>
+          <span class="choice-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="choice-link" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">
+          <span class="choice-icon" aria-hidden="true">Zalo</span>
+          <span class="choice-copy"><strong>Nhắn Hannah qua Zalo</strong><small>Cần hỗ trợ hoặc có câu hỏi? Hannah hỗ trợ bạn trực tiếp.</small></span>
+          <span class="choice-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <footer>14 Ngày Phụ Nữ Làm Chủ AI · Chương trình chỉ dành cho phụ nữ</footer>
 
   <script>
     const sticky = document.querySelector('.sticky');
-    const heroButton = document.querySelector('.hero .js-zalo');
+    const heroButton = document.querySelector('.hero .js-register');
     const finalSection = document.querySelector('.final');
+    const choiceModal = document.querySelector('#choice-modal');
+    const choiceClose = document.querySelector('.choice-close');
+    const registerButtons = document.querySelectorAll('.js-register');
+    let previousFocus;
+    const openChoices = event => {
+      event.preventDefault();
+      previousFocus = document.activeElement;
+      choiceModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      choiceClose.focus();
+    };
+    const closeChoices = () => {
+      choiceModal.classList.remove('open');
+      document.body.style.overflow = '';
+      previousFocus?.focus();
+    };
+    registerButtons.forEach(button => button.addEventListener('click', openChoices));
+    choiceClose.addEventListener('click', closeChoices);
+    choiceModal.addEventListener('click', event => { if (event.target === choiceModal) closeChoices(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && choiceModal.classList.contains('open')) closeChoices(); });
     const updateSticky = () => {
       const heroPassed = heroButton.getBoundingClientRect().bottom < 0;
       const finalVisible = finalSection.getBoundingClientRect().top < window.innerHeight;
