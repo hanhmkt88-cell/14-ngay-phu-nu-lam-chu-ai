@@ -82,6 +82,14 @@
     .feature strong { font-size: 1.35rem; letter-spacing: -.03em; }
     .feature span { color: var(--violet); font-weight: 900; }
     .feature p { margin: 8px 0 0; color: var(--muted); }
+    .outcomes { background: #ece9ff; }
+    .outcome-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+    .outcome-card { grid-column: span 2; min-height: 250px; padding: 28px; border: 1px solid rgba(109,74,255,.18); border-radius: 24px; background: white; }
+    .outcome-card:nth-child(4), .outcome-card:nth-child(5) { grid-column: span 3; }
+    .outcome-num { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: white; background: var(--violet); font-weight: 950; }
+    .outcome-card h3 { margin: 28px 0 10px; font-size: 1.25rem; line-height: 1.2; letter-spacing: -.025em; }
+    .outcome-card p { margin: 0; color: var(--muted); }
+    .outcome-cta { display: flex; justify-content: center; margin-top: 34px; }
     .tree-section { background: #0b0b1d; color: white; overflow: hidden; }
     .tree-section .kicker { color: #c78cff; }
     .tree-section .section-intro { color: #c9cad7; }
@@ -171,6 +179,10 @@
       .tree-shot figcaption { font-size: .8rem; }
       .mentor-photo { max-width: 420px; }
       .mentor-stats { grid-template-columns: 1fr; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .outcome-card, .outcome-card:nth-child(4), .outcome-card:nth-child(5) { grid-column: auto; min-height: auto; padding: 24px; }
+      .outcome-card h3 { margin-top: 20px; font-size: 1.16rem; }
+      .outcome-card p { font-size: 1rem; line-height: 1.55; }
       .mentor-stat { min-height: auto; display: grid; grid-template-columns: 54px 1fr; align-items: center; gap: 10px; }
       .mentor-stat strong { margin: 0; }
       section { padding: 78px 0; }
@@ -258,6 +270,23 @@
       </div>
     </section>
 
+    <section class="outcomes" id="dau-ra">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="kicker">Sau 14 ngày bạn có thể làm gì?</div><h2>14 ngày: Không chỉ học AI. Bắt đầu làm sản phẩm thật.</h2></div>
+          <p class="section-intro">Bạn học cách giao việc cho AI và dùng kết quả đó để phục vụ chính công việc của mình.</p>
+        </div>
+        <div class="outcome-grid">
+          <article class="outcome-card"><div class="outcome-num">01</div><h3>Giao tiếp và ra lệnh đúng cách</h3><p>Cung cấp đúng bối cảnh, mục tiêu và yêu cầu để ChatGPT tập trung giải quyết việc bạn cần.</p></article>
+          <article class="outcome-card"><div class="outcome-num">02</div><h3>Biến ChatGPT thành trợ lý</h3><p>Giao việc, phản hồi và chỉnh kết quả để tiết kiệm thời gian, giảm thao tác thủ công.</p></article>
+          <article class="outcome-card"><div class="outcome-num">03</div><h3>Tạo landing page và trang bán hàng</h3><p>Đi từ ý tưởng → nội dung → cấu trúc → một trang có thể đưa vào sử dụng thực tế.</p></article>
+          <article class="outcome-card"><div class="outcome-num">04</div><h3>Tạo landing page nhân hiệu</h3><p>Tự xây trang giới thiệu chuyên môn, sản phẩm, dịch vụ và giá trị của chính mình.</p></article>
+          <article class="outcome-card"><div class="outcome-num">05</div><h3>Bắt đầu tạo mini app với AI</h3><p>Biến một nhu cầu công việc thành mini app đơn giản, theo cách người không chuyên lập trình vẫn theo được.</p></article>
+        </div>
+        <div class="outcome-cta"><a class="btn btn-violet js-zalo" href="https://zalo.me/0938629413" target="_blank" rel="noopener noreferrer">Giữ vé miễn phí &amp; bắt đầu làm cùng AI <span aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+
     <section class="tree-section">
       <div class="wrap tree-grid">
         <div class="tree-copy">
@@ -285,7 +314,7 @@
         </div>
         <div class="compare">
           <article class="compare-card old"><h3>Trước chương trình</h3><ul><li>Không biết bắt đầu</li><li>Học rời rạc, dễ quá tải</li><li>Thử rồi bỏ</li><li>Sợ mình không đủ giỏi</li></ul></article>
-          <article class="compare-card new"><h3>Sau 14 ngày</h3><ul><li>Có lộ trình để tiếp tục</li><li>Tự tin hỏi AI hơn</li><li>Ứng dụng vào việc gần gũi</li><li>Có đà để duy trì</li></ul></article>
+          <article class="compare-card new"><h3>Sau 14 ngày</h3><ul><li>Biết giao việc thay vì chỉ hỏi AI rời rạc</li><li>Dùng AI giải quyết công việc thực tế</li><li>Bắt đầu tạo landing page, trang nhân hiệu hoặc mini app</li><li>Có phương pháp để tiếp tục ứng dụng AI</li></ul></article>
         </div>
       </div>
     </section>
